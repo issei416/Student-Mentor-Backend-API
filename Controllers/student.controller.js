@@ -56,7 +56,6 @@ export const assignMentor = async (req, res) => {
               { assigned_mentor: [mentorId] },
               { new: true }
           );
-          console.log(updatedstudent);
           res.status(200).send(updatedstudent);
       } else {
           const current_mentorId = student.assigned_mentor[0];
@@ -69,7 +68,6 @@ export const assignMentor = async (req, res) => {
               { new: true }
           );
           await Mentors.updateOne({ _id: current_mentorId }, { $pull: { assigned_students: studentId } });
-          console.log(newstudent);
           res.status(200).json({message: "mentor changed succesfully", newstudent});
     }
   } catch (error) {
@@ -77,3 +75,14 @@ export const assignMentor = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+export const getPrevMentors = async (req, res) => {
+    try {
+        const studentId = req.params.studentId;
+        const student = await Students.findById(studentId).populate("previous_mentors");
+        res.status(200).send(student.previous_mentors);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}

@@ -40,5 +40,20 @@ export const assignStudents = async (req, res) => {
     }
 }
 
+export const getMentorStudents = async (req, res) => {
+    try {
+        const mentorId = req.params.mentorId;
+        console.log(mentorId)
+        const mentor = await Mentors.findById(mentorId).populate("assigned_students");
+        const students = mentor.assigned_students;
+        res.status(200).send(students);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
+
+
 
 
