@@ -12,7 +12,10 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req,res) => {
-    res.status(200).send("Welcome to student-mentor API task");
+    res.status(200).send(
+        `<h1>Welcome to student-mentor API task.  
+         <a href="https://documenter.getpostman.com/view/36384038/2sA3kUHhef" traget="_blank"> click here</a> for API documentation</h1>`
+    );
 })
 
 app.use('/api/student', studentRouter);
